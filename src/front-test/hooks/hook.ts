@@ -1,17 +1,17 @@
 "use strict";
-import { chromium, firefox, webkit, Browser, Page } from 'playwright';
-import { BeforeAll, AfterAll, AfterStep, Status } from '@cucumber/cucumber';
-import * as fs from 'fs';
-import * as path from 'path';
-import { setDefaultTimeout } from '@cucumber/cucumber';
+import { chromium, firefox, webkit, Browser, Page } from "playwright";
+import { BeforeAll, AfterAll, AfterStep, Status } from "@cucumber/cucumber";
+import * as fs from "fs";
+import * as path from "path";
+import { setDefaultTimeout } from "@cucumber/cucumber";
 
 setDefaultTimeout(60 * 1000);
 
 // Capturamos logs de consola en un array
 const logs: string[] = [];
 const originalConsoleLog = console.log;
-console.log = function(...args: any[]) {
-  logs.push(args.join(' '));
+console.log = function (...args: any[]) {
+  logs.push(args.join(" "));
   originalConsoleLog.apply(console, args);
 };
 
@@ -24,11 +24,11 @@ BeforeAll(async function () {
 
   if (browserChoice) {
     console.log(`Ejecutando solo en: ${browserChoice}`);
-    if (browserChoice === 'chromium') browserTypes.push(chromium);
-    if (browserChoice === 'firefox') browserTypes.push(firefox);
-    if (browserChoice === 'webkit') browserTypes.push(webkit);
+    if (browserChoice === "chromium") browserTypes.push(chromium);
+    if (browserChoice === "firefox") browserTypes.push(firefox);
+    if (browserChoice === "webkit") browserTypes.push(webkit);
   } else {
-    console.log('Ejecutando en Chromium, Firefox y WebKit...');
+    console.log("Ejecutando en Chromium, Firefox y WebKit...");
     browserTypes = [chromium, firefox, webkit];
   }
 
@@ -51,7 +51,13 @@ AfterStep(async function ({ result }) {
     const screenshot = await page.screenshot();
 
     // Definimos la ruta para guardar la imagen: src/reports/front/screenshots
-    const screenshotsDir = path.join(process.cwd(), 'src', 'reports', 'front', 'screenshots');
+    const screenshotsDir = path.join(
+      process.cwd(),
+      "src",
+      "reports",
+      "front",
+      "screenshots"
+    );
     if (!fs.existsSync(screenshotsDir)) {
       fs.mkdirSync(screenshotsDir, { recursive: true });
     }
@@ -62,33 +68,35 @@ AfterStep(async function ({ result }) {
     fs.writeFileSync(filePath, screenshot);
 
     // Adjuntamos la imagen al reporte para que el generador (multiple-cucumber-html-reporter) la incluya en el HTML
-    await this.attach(screenshot, 'image/png');
+    await this.attach(screenshot, "image/png");
 
     // Armamos un log de error completo: mensaje, stack trace (si existe) y logs de consola
     let errorDetails = "";
     if (result.exception) {
       if (result.exception instanceof Error) {
-        errorDetails += "Error Exception: " + result.exception.toString() + "\n";
+        errorDetails +=
+          "Error Exception: " + result.exception.toString() + "\n";
         if (result.exception.stack) {
           errorDetails += "Stack Trace: " + result.exception.stack + "\n";
         }
       } else {
-        errorDetails += "Error Exception: " + result.exception.toString() + "\n";
+        errorDetails +=
+          "Error Exception: " + result.exception.toString() + "\n";
       }
     }
     if (logs.length > 0) {
-      errorDetails += "Logs de consola:\n" + logs.join('\n');
+      errorDetails += "Logs de consola:\n" + logs.join("\n");
       // Limpiamos los logs para no repetirlos en próximos pasos
       logs.length = 0;
     }
     if (errorDetails) {
-      await this.attach(errorDetails, 'text/plain');
+      await this.attach(errorDetails, "text/plain");
     }
   }
 });
 
 AfterAll(async function () {
-  console.log('Cerrando navegadores...');
+  console.log("Cerrando navegadores...");
   for (const browser of browsers) {
     await browser.close();
   }

@@ -1,4 +1,4 @@
-@MercadoLibreSearch @Smoke
+@MercadoLibreSearch
 Feature: MercadoLibre search
     Scenario: User search and validate results
         Given User navigates to MercadoLibre page

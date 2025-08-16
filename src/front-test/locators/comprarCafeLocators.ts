@@ -1,0 +1,22 @@
+export const CAFE_ESPRESSO_TEST_ID = "Espresso";
+export const CAFE_AMERICANO_TEST_ID = "Americano";
+export const CAFE_CAPPUCCINO_TEST_ID = "Cappuccino";
+export const CAFE_MOCHA_TEST_ID = "Mocha";
+export const CAFE_LATTE_TEST_ID = "Cafe_Latte";
+export const CAFE_FLAT_WHITE_TEST_ID = "Flat_White";
+export const ADD_TO_CART_ARIA_LABEL = "Cart page";
+export const MENU_BUTTON_TEXT = "menu";
+export const CHECKOUT_BUTTON_TEST_ID = "checkout";
+export const FIRST_NAME_TEST_ID = "name";
+export const EMAIL_TEST_ID = "email";
+export const SUBMIT_TEST_ID = "submit-payment";
+export const PROMOCODE_TEST_ID = "promo-code";
+export const NEWSLETTER_CHECKBOX_TEST_ID = "newsletter";
+export const EMPTY_CART_MESSAGE_TEST_TEXT = "No coffee, go add some.";
+export const SUCCESS_MESSAGE_TEST_TEXT = "Thanks for your purchase!";
+export const INVALID_EMAIL_MESSAGE_TEST_TEXT =
+  "Please enter a valid email address";
+export const TOTAL_PRICE_SELECTOR = "[data-test='total']";
+export const CART_COUNTER_SELECTOR = "[data-test='checkout']";
+export const DISCOUNT_20_CODE = "happybirthday";
+export const DISCOUNT_50_CODE = "DISCOUNT50";
